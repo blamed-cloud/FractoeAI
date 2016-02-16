@@ -50,8 +50,8 @@ if num_humans == 1:
 	else:
 		player2 = player.AI_ABPruning(heuristics.game_heuristic1)
 elif num_humans == 0:
-	player1 = player.AI_ABPruning(game_heuristic1)
-	player2 = player.AI_ABPruning(game_heuristic1)
+	player1 = player.AI_ABPruning(heuristics.game_heuristic1)
+	player2 = player.AI_ABPruning(heuristics.game_heuristic1)
 
 if watch:
 	movie = watcher.Watcher(game_file)
