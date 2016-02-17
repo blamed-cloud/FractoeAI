@@ -52,6 +52,10 @@ if num_humans == 1:
 elif num_humans == 0:
 	player1 = player.AI_ABPruning(heuristics.game_heuristic1)
 	player2 = player.AI_ABPruning(heuristics.game_heuristic1)
+	if random.randint(0,1) == 0:
+		player1 = player.RandomAI()
+	else:
+		player2 = player.RandomAI()
 
 if watch:
 	movie = watcher.Watcher(game_file)
