@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #fractal_tic_tac_toe.py
-###USAGE### fractal_tic_tac_toe.py [-w] [-f <filename>] | [-l] [-f <filename>] [-p <num_players>] [-q] [-h] ; sms=N ; $#=0-3
+###USAGE### fractal_tic_tac_toe.py [-w] [-f <filename>] | [-l] [-f <filename>] [-p <num_players>] [-t] [-h] ; sms=N ; $#=0-7
 import prgm_lib
 import sys
 import random
