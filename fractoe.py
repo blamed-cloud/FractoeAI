@@ -7,7 +7,6 @@ import random
 import heuristics
 import player
 import watcher
-import os
 from fractoe_board import Board
 from fractoe_board import DEFAULT_GAME_FILE
 from fractoe_board import TEMP_GAME_FILE
