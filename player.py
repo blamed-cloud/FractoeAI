@@ -51,11 +51,14 @@ class AI_ABPruning(Player):
 		self.print_depth = show_thought_level
 		
 	def choose_board(self, game):
-		tree = alphabeta.ABPruning_Tree(str(game), DEFAULT_DEPTH, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1, self.print_depth)
-		tree.search()
-		child = tree.get_best_child()
-		self.square_to_pick = child[2]
-		return child[1]
+		if game.get_turn() == 0:
+			return 4	# middle is the best first move according to the current heuristic
+		else:			# or, at least it will move there every time, so this will save time.
+			tree = alphabeta.ABPruning_Tree(str(game), DEFAULT_DEPTH, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1, self.print_depth)
+			tree.search()
+			child = tree.get_best_child()
+			self.square_to_pick = child[2]
+			return child[1]
 	
 	def choose_square(self, game):
 		value = self.square_to_pick
