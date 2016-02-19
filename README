@@ -7,7 +7,7 @@ to run, execute the file fractoe.py
 syntax:
 
 fractoe.py [-w] [-f <filename>]
-fractoe.py [-l] [-f <filename>] [-h] ( [-p <num_players>] | [-t] )
+fractoe.py [-l] [-f <filename>] [-h] [-s <show_depth>] ( [-p <num_players>] | [-t] )
 
 flag descriptions:
 
@@ -28,6 +28,9 @@ flag descriptions:
 	
 -l or --load
 	used to tell the game to load the initial position from the input file.
+	
+-s or --show
+	used to tell the AI to print out its analysis of the first <show_depth> levels of the tree for each move.
 	
 
 NOTE:
