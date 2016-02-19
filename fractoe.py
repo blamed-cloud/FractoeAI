@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #fractal_tic_tac_toe.py
-###USAGE### fractal_tic_tac_toe.py [-w] [-f <filename>] | [-l] [-f <filename>] [-p <num_players>] [-t] [-h] ; sms=N ; $#=0-7
+###USAGE### fractal_tic_tac_toe.py [-w] [-f <filename>] | [-l] [-f <filename>] [-p <num_players>] [-t] [-h] [-s] ; sms=N ; $#=0-7
 import prgm_lib
 import sys
 import random
@@ -15,25 +15,29 @@ re_mk=prgm_lib.flag_re_mk
 
 ### main stuff ###
 
-o_args = prgm_lib.arg_flag_ordering(sys.argv,[1,1,0,0,0,0],[re_mk('file'),re_mk('players'),re_mk('load'),re_mk('test'),re_mk('history'),re_mk('watch')])
+o_args = prgm_lib.arg_flag_ordering(sys.argv,[1,1,1,0,0,0,0],[re_mk('file'),re_mk('players'),re_mk('show'),re_mk('load'),re_mk('test'),re_mk('history'),re_mk('watch')])
 game_file = DEFAULT_GAME_FILE
 num_humans = 2
 test = False
 load = False
 history = False
 watch = False
+show_thought_level = 0
 if str(o_args[0]) != "None":
 	game_file = str(o_args[0])
 if str(o_args[1]) != "None":
 	num_humans = int(o_args[1])
 if str(o_args[2]) != "None":
-	load = True
+	show_thought_level = int(o_args[2])
 if str(o_args[3]) != "None":
-	test = True
+	load = True
 if str(o_args[4]) != "None":
-	history = True
+	test = True
 if str(o_args[5]) != "None":
+	history = True
+if str(o_args[6]) != "None":
 	watch = True
+	
 	
 if watch and str(o_args[0]) == "None":
 	print "Please enter the path to the file containing the game to watch:"
@@ -45,12 +49,12 @@ player2 = player.Human()
 
 if num_humans == 1:
 	if random.randint(0,1) == 0:
-		player1 = player.AI_ABPruning(heuristics.game_heuristic1)
+		player1 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
 	else:
-		player2 = player.AI_ABPruning(heuristics.game_heuristic1)
+		player2 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
 elif num_humans == 0:
-	player1 = player.AI_ABPruning(heuristics.game_heuristic1)
-	player2 = player.AI_ABPruning(heuristics.game_heuristic1)
+	player1 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
+	player2 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
 	if random.randint(0,1) == 0:
 		player1 = player.RandomAI()
 	else:

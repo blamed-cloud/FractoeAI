@@ -5,6 +5,7 @@ import random
 import alphabeta
 from heuristics import UPPER_BOUND
 from heuristics import LOWER_BOUND
+from alphabeta import DEFAULT_DEPTH
 
 class Player:
 	def __init__(self):
@@ -43,13 +44,14 @@ class RandomAI(Player):
 
 
 class AI_ABPruning(Player):
-	def __init__(self, heuristic_func):
+	def __init__(self, heuristic_func, show_thought_level):
 		self.human = False
 		self.square_to_pick = -1
 		self.heuristic = heuristic_func
+		self.print_depth = show_thought_level
 		
 	def choose_board(self, game):
-		tree = alphabeta.ABPruning_Tree(str(game), 5, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1)
+		tree = alphabeta.ABPruning_Tree(str(game), DEFAULT_DEPTH, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1, self.print_depth)
 		tree.search()
 		child = tree.get_best_child()
 		self.square_to_pick = child[2]
@@ -60,7 +62,7 @@ class AI_ABPruning(Player):
 		if self.square_to_pick != -1:
 			self.square_to_pick = -1
 		else:
-			tree = alphabeta.ABPruning_Tree(str(game), 5, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1)
+			tree = alphabeta.ABPruning_Tree(str(game), DEFAULT_DEPTH, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1, self.print_depth)
 			tree.search()
 			child = tree.get_best_child()
 			value = child[2]
