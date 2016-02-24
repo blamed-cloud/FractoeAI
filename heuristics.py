@@ -49,6 +49,25 @@ def game_length(game_state):
 		turns = turns * -1
 	return turns
 			
+def is_volatile(game_state):
+	value = False
+	board_list = re.split(";", game_state)
+	turn = int(board_list[-2])
+	current_board = int(board_list[-1])
+	board_list = board_list[:-2]
+	if current_board == -1:
+		value = True
+	else:
+		grid = tictactoe_string_to_numbers(board_list[current_board])
+		if turn % 2 == 1:	# X player
+			grid = [[grid[j][k]+1 for k in range(3)] for j in range(3)]
+		else:			# O player
+			grid = [[abs(grid[j][k]-1) for k in range(3)] for j in range(3)]
+		moves = tictactoe_moves_to_win(grid)
+		if moves == 4:
+			value = True
+	return value
+			
 def game_heuristic1(game_state):
 	value = 0
 	board_list = re.split(";", game_state)[:-2]

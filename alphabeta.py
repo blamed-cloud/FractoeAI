@@ -8,9 +8,11 @@ from fractoe_board import DEFAULT_GAME_FILE
 from fractoe_board import TEMP_GAME_FILE
 from heuristics import UPPER_BOUND
 from heuristics import LOWER_BOUND
+from heuristics import is_volatile
 import sys
 
 DEFAULT_DEPTH = 5
+VOLATILE_DEPTH = -3
 
 class ABPruning_Tree:
 	def __init__(self, game_state = "", depth_lim = DEFAULT_DEPTH, A = LOWER_BOUND, B = UPPER_BOUND, heuristic = None, i_am_max = True, p_depth = 0):
@@ -52,7 +54,7 @@ class ABPruning_Tree:
 		
 		
 	def search(self):
-		if self.depth_limit == 0 or self.is_terminal_node():
+		if (self.depth_limit <= 0 and not is_volatile(self.state)) or (self.depth_limit == VOLATILE_DEPTH) or self.is_terminal_node():
 			self.value = self.evaluate(self.state)
 		else:
 			self.set_children()
