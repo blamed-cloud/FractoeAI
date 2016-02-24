@@ -57,8 +57,10 @@ elif num_humans == 0:
 	player2 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
 	if random.randint(0,1) == 0:
 		player1 = player.RandomAI()
+		print "Player 1 is random"
 	else:
 		player2 = player.RandomAI()
+		print "Player 2 is random"
 
 if watch:
 	movie = watcher.Watcher(game_file)
@@ -70,21 +72,24 @@ else:
 		game = Board(player1, player2, game_file, history, load)
 		game.play()
 	else:
-		player1 = player.RandomAI()
-		player2 = player.RandomAI()
-		max_turns = 0
-		counter = 0
-		while max_turns < 81:
-			game = Board(player1, player2, game_file, history, load, True)
-			game.play()
-			counter += 1
-			if game.get_turn() >= max_turns:
-				game.opg()
-				max_turns = game.get_turn()
-				print str(max_turns) + " ; " + str(counter)
+#		player1 = player.RandomAI()
+#		player2 = player.RandomAI()
+#		max_turns = 0
+#		counter = 0
+#		while max_turns < 81:
+#			game = Board(player1, player2, game_file, history, load, True)
+#			game.play()
+#			counter += 1
+#			if game.get_turn() >= max_turns:
+#				game.opg()
+#				max_turns = game.get_turn()
+#				print str(max_turns) + " ; " + str(counter)
+		player1 = player.AI_PutinGambit(heuristics.game_heuristic1, show_thought_level)
+		player2 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
+		game = Board(player1, player2, game_file, history, load)
+		game.play()
 
-
-
+		
 
 
 

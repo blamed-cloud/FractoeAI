@@ -71,4 +71,18 @@ class AI_ABPruning(Player):
 			value = child[2]
 		return value
 		
-
+		
+class AI_PutinGambit(AI_ABPruning):		
+	def choose_square(self, game):
+		if game.is_board_won(4) == -1:
+			if game.get_player() == 1:
+				return 4
+		value = self.square_to_pick
+		if self.square_to_pick != -1:
+			self.square_to_pick = -1
+		else:
+			tree = alphabeta.ABPruning_Tree(str(game), DEFAULT_DEPTH, LOWER_BOUND, UPPER_BOUND, self.heuristic, game.get_player() == 1, self.print_depth)
+			tree.search()
+			child = tree.get_best_child()
+			value = child[2]
+		return value

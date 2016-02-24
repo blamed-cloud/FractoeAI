@@ -56,6 +56,9 @@ class Board:
 			self.current_row = -1
 			self.current_col = -1
 		self.check_for_winner()
+		
+	def is_board_won(self, board):
+		return self.boards_won[board]
 	
 	def load_state_from_file(self, file_name = DEFAULT_GAME_FILE):
 		FILE = open(file_name, 'r')
@@ -268,6 +271,8 @@ class Board:
 		human = self.is_human_turn()
 		if human:
 			self.opg()
+		else:
+			print "The computer is thinking..."
 		if self.current_box != -1:
 			if human:
 				print "Current Square to be played in, at location (" + str(self.current_row) + ", " + str(self.current_col) + ")"
