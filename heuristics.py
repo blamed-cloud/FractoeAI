@@ -43,6 +43,12 @@ def count_won_boards(moves_grid):
 				value += 1
 	return value
 			
+def game_length(game_state):
+	turns = int(re.split(";", game_state)[-2])	#returns the number of turns of the game.
+	if turns % 2 == 0:
+		turns = turns * -1
+	return turns
+			
 def game_heuristic1(game_state):
 	value = 0
 	board_list = re.split(";", game_state)[:-2]

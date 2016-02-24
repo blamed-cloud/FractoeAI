@@ -7,7 +7,7 @@ to run, execute the file fractoe.py
 syntax:
 
 fractoe.py [-w] [-f <filename>]
-fractoe.py [-l] [-f <filename>] [-h] [-s <show_depth>] ( [-p <num_players>] | [-t] )
+fractoe.py [-l] [-f <filename>] [-h] [-s <show_depth>] ( [-p <num_players>] | [-t <test_type>] )
 
 flag descriptions:
 
@@ -24,8 +24,10 @@ flag descriptions:
 	used to set the number of human players for the game, requires a <num_players> in {0,1,2} to come directly after the flag.
 	
 -t or --test
-	used for testing purposed. currently is being used to test for 81 move draws.
-	
+	used for testing purposed. <test_type> currently takes one of three values:
+		"putingambit" is being used to test the different AI's against each other
+		"draw1" is being used to test for 81 move draws
+		"draw2" is an alternative way to test for long games.
 -l or --load
 	used to tell the game to load the initial position from the input file.
 	

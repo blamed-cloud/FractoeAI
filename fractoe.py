@@ -15,13 +15,14 @@ re_mk=prgm_lib.flag_re_mk
 
 ### main stuff ###
 
-o_args = prgm_lib.arg_flag_ordering(sys.argv,[1,1,1,0,0,0,0],[re_mk('file'),re_mk('players'),re_mk('show'),re_mk('load'),re_mk('test'),re_mk('history'),re_mk('watch')])
+o_args = prgm_lib.arg_flag_ordering(sys.argv,[1,1,1,0,1,0,0],[re_mk('file'),re_mk('players'),re_mk('show'),re_mk('load'),re_mk('test'),re_mk('history'),re_mk('watch')])
 game_file = DEFAULT_GAME_FILE
 num_humans = 2
 test = False
 load = False
 history = False
 watch = False
+this_test = "putingambit"
 show_thought_level = 0
 if str(o_args[0]) != "None":
 	game_file = str(o_args[0])
@@ -33,6 +34,7 @@ if str(o_args[3]) != "None":
 	load = True
 if str(o_args[4]) != "None":
 	test = True
+	this_test = str(o_args[4])
 if str(o_args[5]) != "None":
 	history = True
 if str(o_args[6]) != "None":
@@ -62,6 +64,11 @@ elif num_humans == 0:
 		player2 = player.RandomAI()
 		print "Player 2 is random"
 
+### decide which test to run ###
+#this_test = "draw1"
+#this_test = "putingambit"
+#this_test = "draw2"
+
 if watch:
 	movie = watcher.Watcher(game_file)
 	movie.set_heuristic(heuristics.game_heuristic1)
@@ -72,24 +79,30 @@ else:
 		game = Board(player1, player2, game_file, history, load)
 		game.play()
 	else:
-#		player1 = player.RandomAI()
-#		player2 = player.RandomAI()
-#		max_turns = 0
-#		counter = 0
-#		while max_turns < 81:
-#			game = Board(player1, player2, game_file, history, load, True)
-#			game.play()
-#			counter += 1
-#			if game.get_turn() >= max_turns:
-#				game.opg()
-#				max_turns = game.get_turn()
-#				print str(max_turns) + " ; " + str(counter)
-		player1 = player.AI_PutinGambit(heuristics.game_heuristic1, show_thought_level)
-		player2 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
-		game = Board(player1, player2, game_file, history, load)
-		game.play()
+		if this_test == "draw1":
+			player1 = player.RandomAI()
+			player2 = player.RandomAI()
+			max_turns = 0
+			counter = 0
+			while max_turns < 81:
+				game = Board(player1, player2, game_file, history, load, True)
+				game.play()
+				counter += 1
+				if game.get_turn() >= max_turns:
+					game.opg()
+					max_turns = game.get_turn()
+					print str(max_turns) + " ; " + str(counter)
+		elif this_test == "putingambit":
+			player1 = player.AI_PutinGambit(heuristics.game_heuristic1, show_thought_level)
+			player2 = player.AI_ABPruning(heuristics.game_heuristic1, show_thought_level)
+			game = Board(player1, player2, game_file, history, load)
+			game.play()
+		elif this_test == "draw2":
+			player1 = player.AI_ABPruning(heuristics.game_length, show_thought_level)
+			player2 = player.AI_ABPruning(heuristics.game_length, show_thought_level)
+			game = Board(player1, player2, game_file, history, load)
+			game.play()
 
-		
 
 
 
