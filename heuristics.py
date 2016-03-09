@@ -39,7 +39,7 @@ def tictactoe_moves_to_win(grid):
 	
 def jank_log2(num):
 	power = 0
-	while 2 ** power <= num:
+	while 2 ** power < num:
 		power += 1
 	return power 
 	
@@ -105,18 +105,17 @@ def game_heuristic1(game_state):
 		moves_o = 9 - jank_log2(moves_till_o_wins)
 	else:
 		moves_o = -1
-	if moves_x != -1 and moves_o != -1:
-		value = moves_o - moves_x + board_offset
-	elif moves_x == -1 and moves_o == -1:
-		value = 0
-	elif moves_x == -1 and moves_o != -1:
-		value = LOWER_BOUND / 2
-	elif moves_x != -1 and moves_o == -1:
-		value = UPPER_BOUND / 2
-	elif moves_x == 0:
+	if moves_x == 0:
 		value = UPPER_BOUND
 	elif moves_o == 0:
 		value = LOWER_BOUND
+	elif moves_x == -1 and moves_o == -1:
+		value = 0
+	elif moves_x == -1 and moves_o != -1:
+		value = LOWER_BOUND / 2 + moves_o + board_offset
+	elif moves_x != -1 and moves_o == -1:
+		value = UPPER_BOUND / 2 - moves_x + board_offset
+	elif moves_x != -1 and moves_o != -1:
+		value = moves_o - moves_x + board_offset
 	return value
-	
 
