@@ -22,12 +22,12 @@ def get_sort_order(child_tuple):
 	order = 0
 	if not is_board_won(child_tuple[0], child_tuple[1]):
 		order += ORDER_NORMAL
-	if not is_board_win(child_tuple[0], child_tuple[2]):
+	if not is_board_won(child_tuple[0], child_tuple[2]):
 		order += ORDER_FREE
 	return order
 
 def sort_into_search_order(children):
-	return sorted(children, key=get_sort_order)
+	return sorted(children, key=get_sort_order, reverse=True)
 
 class ABPruning_Tree:
 	def __init__(self, game_state = "", depth_lim = DEFAULT_DEPTH, A = LOWER_BOUND, B = UPPER_BOUND, heuristic = None, i_am_max = True, p_depth = 0):

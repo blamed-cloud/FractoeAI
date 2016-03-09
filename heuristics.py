@@ -22,8 +22,8 @@ def tictactoe_string_to_numbers(tic_state):
 	return grid
 
 def is_board_won(state, board):
-	board_str = re.split(";", game_state)[board]
-	grid = tictactoe_string_to_numbers(board_list[current_board])
+	board_str = re.split(";", state)[board]
+	grid = tictactoe_string_to_numbers(board_str)
 	grid_x = [[grid[j][k]+1 for k in range(3)] for j in range(3)]
 	grid_o = [[abs(grid[j][k]-1) for k in range(3)] for j in range(3)]
 	moves = max(tictactoe_moves_to_win(grid_x),tictactoe_moves_to_win(grid_o))
@@ -98,11 +98,11 @@ def game_heuristic1(game_state):
 	moves_till_x_wins = tictactoe_moves_to_win(big_grid_x)
 	moves_till_o_wins = tictactoe_moves_to_win(big_grid_o)
 	if moves_till_x_wins != 0:
-		moves_x = 10 - jank_log2(moves_till_x_wins)
+		moves_x = 9 - jank_log2(moves_till_x_wins)
 	else:
 		moves_x = -1
 	if moves_till_o_wins != 0:
-		moves_o = 10 - jank_log2(moves_till_o_wins)
+		moves_o = 9 - jank_log2(moves_till_o_wins)
 	else:
 		moves_o = -1
 	if moves_x != -1 and moves_o != -1:
@@ -115,7 +115,7 @@ def game_heuristic1(game_state):
 		value = UPPER_BOUND / 2
 	elif moves_x == 0:
 		value = UPPER_BOUND
-	elif moves_y == 0:
+	elif moves_o == 0:
 		value = LOWER_BOUND
 	return value
 	
