@@ -9,10 +9,25 @@ from fractoe_board import TEMP_GAME_FILE
 from heuristics import UPPER_BOUND
 from heuristics import LOWER_BOUND
 from heuristics import is_volatile
+from heuristics import is_board_won
 import sys
 
 DEFAULT_DEPTH = 5
 VOLATILE_DEPTH = -3
+
+ORDER_NORMAL = 1
+ORDER_FREE = 2
+
+def get_sort_order(child_tuple):
+	order = 0
+	if not is_board_won(child_tuple[0], child_tuple[1]):
+		order += ORDER_NORMAL
+	if not is_board_win(child_tuple[0], child_tuple[2]):
+		order += ORDER_FREE
+	return order
+
+def sort_into_search_order(children):
+	return sorted(children, key=get_sort_order)
 
 class ABPruning_Tree:
 	def __init__(self, game_state = "", depth_lim = DEFAULT_DEPTH, A = LOWER_BOUND, B = UPPER_BOUND, heuristic = None, i_am_max = True, p_depth = 0):
@@ -36,7 +51,7 @@ class ABPruning_Tree:
 	def set_children(self):
 		game = Board(player.Player(),player.Player(),DEFAULT_GAME_FILE)
 		game.load_state_from_string(self.state)
-		self.children = game.get_children_states()
+		self.children = sort_into_search_order(game.get_children_states())
 		
 	def is_terminal_node(self):
 		game = Board(player.Player(),player.Player(),DEFAULT_GAME_FILE)

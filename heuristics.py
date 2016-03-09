@@ -21,6 +21,14 @@ def tictactoe_string_to_numbers(tic_state):
 		grid.append(row)
 	return grid
 
+def is_board_won(state, board):
+	board_str = re.split(";", game_state)[board]
+	grid = tictactoe_string_to_numbers(board_list[current_board])
+	grid_x = [[grid[j][k]+1 for k in range(3)] for j in range(3)]
+	grid_o = [[abs(grid[j][k]-1) for k in range(3)] for j in range(3)]
+	moves = max(tictactoe_moves_to_win(grid_x),tictactoe_moves_to_win(grid_o))
+	return (moves == 8)
+
 def tictactoe_moves_to_win(grid):	
 	products_rows = [list_product(row) for row in grid]
 	products_cols = [list_product([grid[row][col] for row in range(3)]) for col in range(3)]
@@ -34,7 +42,7 @@ def jank_log2(num):
 	while 2 ** power <= num:
 		power += 1
 	return power 
-			
+	
 def count_won_boards(moves_grid):
 	value = 0
 	for x in range(3):
