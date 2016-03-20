@@ -18,7 +18,7 @@ def coor_splice(row,col):
 	return row*3 + col
 
 class Board:
-	def __init__(self, player1, player2, filename = DEFAULT_GAME_FILE, save_history = False, to_load = False, be_quiet = False):
+	def __init__(self, player1, player2, filename = DEFAULT_GAME_FILE, save_history = False, to_load = False, be_quiet = False, show = False):
 		self.grid = [[Tictactoe(), Tictactoe(), Tictactoe()], [Tictactoe(), Tictactoe(), Tictactoe()], [Tictactoe(), Tictactoe(), Tictactoe()]]
 		self.turn = 0
 		self.current_box = -1
@@ -32,6 +32,9 @@ class Board:
 		self.game_file = filename
 		self.quiet = be_quiet
 		self.history = save_history
+		self.thinking = False
+		self.show_board = show
+		self.last_moves = [ [[-1,-1],[-1,-1]], [[-1,-1], [-1,-1]] ] 
 		if self.history and not to_load:
 			temp = open(self.game_file, 'w')	### erase contents of the game file
 			temp.close()				###
@@ -164,6 +167,14 @@ class Board:
 					self.load_state_from_string(root)
 		return children
 		
+	def get_last_moves_in(self,x,y,z):
+		special = []
+		if self.last_moves[0][0][0] == x and self.last_moves[0][0][1] == y and self.last_moves[0][1][0] == z:
+			special += [self.last_moves[0][1][1]]
+		if self.last_moves[1][0][0] == x and self.last_moves[1][0][1] == y and self.last_moves[1][1][0] == z:
+			special += [self.last_moves[1][1][1]]
+		return special
+		
 	def opg(self):
 		prgm_lib.cls(100)
 		for x in range(len(self.grid)):
@@ -173,15 +184,16 @@ class Board:
 				string1 = ''
 				string2 = ''
 				for y in range(len(self.grid[x])):
-					string3 = self.grid[x][y].get_row(z)
-					for var in range(len(string3)):
+					special = self.get_last_moves_in(x,y,z)
+					string3 = self.grid[x][y].get_row(z,special)
+					for var in range(len(string3) - 9 * len(special)):
 						string2 += "-"
 					string1 += string3 + " || "
 					string2 += " || "
 				print string1[:-4]
 				if z != 2:
 					print string2[:-4]
-				size = len(string1)-4
+				size = len(string2)-4
 			for var in range(size):
 				string0 += "="
 			if x != 2:
@@ -269,10 +281,12 @@ class Board:
 								
 	def do_turn(self):
 		human = self.is_human_turn()
-		if human:
+		if human or self.show_board:
 			self.opg()
-		else:
-			print "The computer is thinking..."
+		if not human:
+			if not self.thinking:
+				print "Player" + str(self.get_player()) + " (the computer) is thinking..."
+				self.thinking = True
 		if self.current_box != -1:
 			if human:
 				print "Current Square to be played in, at location (" + str(self.current_row) + ", " + str(self.current_col) + ")"
@@ -285,9 +299,16 @@ class Board:
 			finished_playing = False
 			while not finished_playing:
 				num = self.get_num_for_square()
+				y = self.current_row
+				x = self.current_col
+				inner_col = num % 3
+				inner_row = (num - (num % 3))/3
+				turn_descriptor = [[y,x], [inner_row, inner_col]]
 				if self.try_placing_square(num):
 					self.turn += 1
 					finished_playing = True
+					self.thinking = False
+					self.last_moves[self.get_player()-1] = turn_descriptor
 			if self.history:
 				self.save_state(self.game_file)	
 		else:

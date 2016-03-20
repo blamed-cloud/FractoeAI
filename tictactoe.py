@@ -1,5 +1,6 @@
 #!/usr/bin/python
 #tictactoe.py
+from prgm_lib import bcolors
 
 class Tictactoe:
 	def __init__(self):
@@ -30,11 +31,23 @@ class Tictactoe:
 	def get_square(self,row,col):
 		return self.grid[row][col]
 		
-	def get_row(self,row):
+	def get_row(self,row, special = [-1]): #color the special token
 		string = ' '
 		for y in range(len(self.grid)):
-			string += self.grid[row][y] + " | "
+			if y not in special:
+				string += self.grid[row][y] + " | "
+			else:
+				string += self.colored(self.grid[row][y]) + " | "
+
 		return string[:-2]
+		
+	def colored(self,token):
+		value = token
+		if token == "X":
+			value = bcolors.BLUE + token + bcolors.ENDC
+		elif token == "O":
+			value = bcolors.RED + token + bcolors.ENDC
+		return value
 		
 	def check_for_winner(self):
 		for x in range(len(self.grid)):
