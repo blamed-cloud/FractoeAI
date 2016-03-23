@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #fractal.py
 ###USAGE### fractal.py [-w] [-f <filename>] | [-l] [-f <filename>] [-p <num_players>] [-t] [-h] [-s <show_depth>] [-x] [-o] [-b] ; sms=N ; $#=0-9
-import prgm_lib
+import PythonLibraries.prgm_lib as prgm_lib
 import sys
 import random
 import heuristics

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #alphabeta.py
 from __future__ import print_function
+import sys
 import random
 import player
 from fractoe_board import Board
@@ -10,7 +11,6 @@ from heuristics import UPPER_BOUND
 from heuristics import LOWER_BOUND
 from heuristics import is_volatile
 from heuristics import is_board_won
-import sys
 
 DEFAULT_DEPTH = 5
 VOLATILE_DEPTH = -3

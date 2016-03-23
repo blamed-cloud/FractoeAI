@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #player.py
-import prgm_lib
+import PythonLibraries.prgm_lib as prgm_lib
 import random
 import alphabeta
 from heuristics import UPPER_BOUND

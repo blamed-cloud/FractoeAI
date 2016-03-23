@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #fractoe_board.py
 import re
-import prgm_lib
+import PythonLibraries.prgm_lib as prgm_lib
 import tictactoe
 Tictactoe = tictactoe.Tictactoe
 import os

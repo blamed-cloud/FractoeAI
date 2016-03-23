@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #watcher.py
 import re
-import prgm_lib
+import PythonLibraries.prgm_lib as prgm_lib
 from fractoe_board import Board
 from fractoe_board import DEFAULT_GAME_FILE
 from fractoe_board import TEMP_GAME_FILE

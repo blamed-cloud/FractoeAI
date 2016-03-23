@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #tictactoe.py
-from prgm_lib import bcolors
+from PythonLibraries.prgm_lib import bcolors
 
 class Tictactoe:
 	def __init__(self):
